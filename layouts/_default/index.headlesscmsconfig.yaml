@@ -1,0 +1,27 @@
+{{- $params := .Site.Params.headless_cms_config -}}
+{{- $config := newScratch -}}
+{{/* Reading settings from configuration. */}}
+{{- $keys := slice
+  "backend" "i18n" "local_backend" "locale" "logo_url" "media_folder"
+  "public_folder" "public_mode" "search"
+-}}
+{{- range $keys -}}
+  {{- $key := . -}}
+  {{- if isset $params $key -}}
+    {{- $config.Set $key (index $params $key) -}}
+  {{- end -}}
+{{- end -}}
+{{/* Transform collections. */}}
+{{- with index $params "collections" -}}
+  {{- range . -}}
+    {{- $config.Add "collections" (slice .) }}
+  {{- end -}}
+{{- end -}}
+{{/* Set the site URL. */}}
+{{- $config.Set "site_url" site.BaseURL -}}
+{{/* Use site language as the locale if not set. */}}
+{{- if not ($config.Get "locale") }}
+  {{- $locale := partialCached "headless-cms/functions/locale" . }}
+  {{- $config.Set "locale" $locale }}
+{{- end }}
+{{- transform.Remarshal "yaml" $config.Values | safeHTML -}}

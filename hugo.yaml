@@ -1,0 +1,18 @@
+module:
+  hugoVersion:
+    min: "0.119.0"
+    extended: false
+
+outputFormats:
+  HeadlessCMSConfig:
+    baseName: "headless-cms-config"
+    isHTML: false
+    notAlternative: true
+    mediaType: "application/yaml"
+
+params:
+  headless_cms:
+    publish_mode: "editorial_workflow"
+    media_folder: "static/uploads"
+    public_folder: "/uploads"
+    search: true
