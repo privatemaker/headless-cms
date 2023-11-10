@@ -5,13 +5,16 @@ Headless CMS Hugo Module
 
 ## Installation
 
-First import the module and append the `HeadlessCMSConfig` to the `home` output 
-in your `hugo.yaml` or `config/_default/config.yaml` file.
+Assuming your Hugo site is already using [Hugo
+Modules](https://gohugo.io/hugo-modules/), then import the module and append the
+`HeadlessCMSConfig` to the `home` output in your `hugo.yaml` or
+`config/_default/config.yaml` file.
 
-```
+```yaml
 module:
   imports:
   - path: github.com/privatemaker/headless-cms
+
 outputs:
   home:
   - HTML
@@ -19,9 +22,9 @@ outputs:
   - HeadlessCMSConfig
 ```
 
-Second create file `content/admin/_index.md` with following content:
+Next create file `content/admin/_index.md` with following content:
 
-```
+```yaml
 ---
 title: Your Headless CMS
 layout: headless-cms
@@ -35,7 +38,7 @@ You can access it on `/admin` for example, `http://localhost:1313/admin/`
 Lastly, in your `hugo.yaml` or `config/_default/params.yaml` file, insert and
 edit in your CMS config values.
 
-```
+```yaml
 params:
   headless_cms:
     backend:
