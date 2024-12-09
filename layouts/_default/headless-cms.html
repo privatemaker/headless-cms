@@ -37,7 +37,7 @@
         {{ errorf "%s" . }}
     {{ else }}
     {{ warnf "Serving cached resource: %q" .RelPermalink }}
-    <script src="{{ .RelPermalink | absURL }}" type="module"></script>
+    <script src="{{ .RelPermalink | absURL }}"></script>
     {{ end }}
     {{ else }}
     {{ errorf "Unable to .GetRemote %q" $url_sveltia }}
