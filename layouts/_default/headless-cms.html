@@ -13,11 +13,11 @@
     <!-- Use Decap CMS -->
     {{ if eq $.Site.Params.headless_cms.engine "decap" }}
     {{ $url_decap := "https://unpkg.com/decap-cms@latest/dist/decap-cms.js" }}
-    {{ with resources.GetRemote $url_decap (dict "key" "decap-cms.css") }}
+    {{ with try (resources.GetRemote $url_decap (dict "key" "decap-cms.css")) }}
     {{ warnf "Fetching .GetRemote %q" $url_decap }}
     {{ with .Err }}
         {{ errorf "%s" . }}
-    {{ else }}
+    {{ else with .Value }}
     {{ warnf "Serving cached resource: %q" .RelPermalink }}
     <script src="{{ .RelPermalink | absURL }}"></script>
     {{ end }}
@@ -31,11 +31,11 @@
     <!-- Use Sveltia CMS -->
     {{ else if eq $.Site.Params.headless_cms.engine "sveltia" }}
     {{ $url_sveltia := "https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" }}
-    {{ with resources.GetRemote $url_sveltia (dict "key" "sveltia-cms.css") }}
+    {{ with try (resources.GetRemote $url_sveltia (dict "key" "sveltia-cms.css")) }}
     {{ warnf "Fetching .GetRemote %q" $url_sveltia }}
     {{ with .Err }}
         {{ errorf "%s" . }}
-    {{ else }}
+    {{ else with .Value }}
     {{ warnf "Serving cached resource: %q" .RelPermalink }}
     <script src="{{ .RelPermalink | absURL }}"></script>
     {{ end }}
