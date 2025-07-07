@@ -61,11 +61,21 @@ params:
             name: "title"
             widget: "string"
         ...
+    singletons: # Only works with Sveltia ≥0.83
+      - name: home
+        label: Home Page
+        file: content/home.yaml
+        icon: home
+        fields:
+          - label: "Title"
+            name: "title"
+            widget: "string"
+          ...
 ```
 
 The default value of `engine: "sveltia"` to draw attention to the great
 project, but if you need more stability and full functionality use `decap` engine.
-The full list of config variables for both Decap and Sveltia CMS (the later uses the 
+The full list of config variables for both Decap and Sveltia CMS (the later uses the
 same specification) is here:
 
 - [Configuation](https://decapcms.org/docs/configuration-options/)

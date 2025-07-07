@@ -17,6 +17,12 @@
     {{- $config.Add "collections" (slice .) }}
   {{- end -}}
 {{- end -}}
+{{/* Transform singletons. */}}
+{{- with index $params "singletons" -}}
+  {{- range . -}}
+    {{- $config.Add "singletons" (slice .) }}
+  {{- end -}}
+{{- end -}}
 {{/* Set the site URL. */}}
 {{- $config.Set "site_url" site.BaseURL -}}
 {{/* Use site language as the locale if not set. */}}
