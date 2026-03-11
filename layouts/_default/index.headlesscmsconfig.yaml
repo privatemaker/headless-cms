@@ -3,7 +3,7 @@
 {{/* Reading settings from configuration. */}}
 {{- $keys := slice
   "backend" "i18n" "local_backend" "locale" "logo_url" "media_folder"
-  "public_folder" "public_mode" "search"
+  "public_folder" "public_mode" "search" "slug"
 -}}
 {{- range $keys -}}
   {{- $key := . -}}
