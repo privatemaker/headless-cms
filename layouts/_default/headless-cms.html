@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.Language.LanguageCode }}">
+<html lang="{{ .Site.Language.Locale }}">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -42,7 +42,7 @@
     {{ else }}
     {{ errorf "Unable to .GetRemote %q" $url_sveltia }}
     {{ end }}
-    
+
     {{ else }}
     <h1>Error</h1>
     <p>
