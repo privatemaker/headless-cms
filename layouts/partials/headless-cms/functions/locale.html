@@ -5,7 +5,7 @@
   "zh-hk" "zh_Hant"
   "zh-tw" "zh_Hant"
 }}
-{{- $locale := site.Language.LanguageCode }}
+{{- $locale := site.Language.Locale }}
 {{- with index $locales $locale }}
   {{- $locale = . }}
 {{- end }}
