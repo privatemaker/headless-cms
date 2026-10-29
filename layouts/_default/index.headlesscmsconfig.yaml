@@ -14,8 +14,10 @@
     {{- $config.Add "collections" (slice .) }}
   {{- end -}}
 {{- end -}}
-{{/* Set the site URL. */}}
-{{- $config.Set "site_url" site.BaseURL -}}
+{{/* Use the site base URL as the site URL if not set. */}}
+{{- if not ($config.Get "site_url") -}}
+  {{- $config.Set "site_url" site.BaseURL -}}
+{{- end -}}
 {{/* Use site language as the locale if not set. */}}
 {{- if not ($config.Get "locale") }}
   {{- $locale := partialCached "headless-cms/functions/locale" . }}
