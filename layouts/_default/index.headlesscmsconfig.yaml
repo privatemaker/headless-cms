@@ -1,17 +1,21 @@
 {{- $params := .Site.Params.headless_cms -}}
 {{- $config := newScratch -}}
-{{/* Keys used by this module only, not passed to the CMS. */}}
-{{- $exclude := slice "engine" -}}
+{{/* Keys not passed to the CMS as is: used by this module only, or transformed below. */}}
+{{- $exclude := slice "engine" "collections" -}}
 {{/* Pass through all other settings. */}}
 {{- range $key, $value := $params -}}
   {{- if not (in $exclude $key) -}}
     {{- $config.Set $key $value -}}
   {{- end -}}
 {{- end -}}
-{{/* Transform collections. */}}
-{{- with index $params "collections" -}}
-  {{- range . -}}
-    {{- $config.Add "collections" (slice .) }}
+{{/* Transform collections given as a map into a list, using the key as name. */}}
+{{- with $params.collections -}}
+  {{- if reflect.IsMap . -}}
+    {{- range $name, $collection := . -}}
+      {{- $config.Add "collections" (slice (merge (dict "name" $name) $collection)) -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $config.Set "collections" . -}}
   {{- end -}}
 {{- end -}}
 {{/* Use the site base URL as the site URL if not set. */}}
