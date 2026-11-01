@@ -1,24 +1,27 @@
 {{- $params := .Site.Params.headless_cms -}}
 {{- $config := newScratch -}}
-{{/* Reading settings from configuration. */}}
-{{- $keys := slice
-  "backend" "i18n" "local_backend" "locale" "logo_url" "media_folder"
-  "public_folder" "public_mode" "search"
--}}
-{{- range $keys -}}
-  {{- $key := . -}}
-  {{- if isset $params $key -}}
-    {{- $config.Set $key (index $params $key) -}}
+{{/* Keys not passed to the CMS as is: used by this module only, or transformed below. */}}
+{{- $exclude := slice "engine" "engine_version" "collections" -}}
+{{/* Pass through all other settings. */}}
+{{- range $key, $value := $params -}}
+  {{- if not (in $exclude $key) -}}
+    {{- $config.Set $key $value -}}
   {{- end -}}
 {{- end -}}
-{{/* Transform collections. */}}
-{{- with index $params "collections" -}}
-  {{- range . -}}
-    {{- $config.Add "collections" (slice .) }}
+{{/* Transform collections given as a map into a list, using the key as name. */}}
+{{- with $params.collections -}}
+  {{- if reflect.IsMap . -}}
+    {{- range $name, $collection := . -}}
+      {{- $config.Add "collections" (slice (merge (dict "name" $name) $collection)) -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $config.Set "collections" . -}}
   {{- end -}}
 {{- end -}}
-{{/* Set the site URL. */}}
-{{- $config.Set "site_url" site.BaseURL -}}
+{{/* Use the site base URL as the site URL if not set. */}}
+{{- if not ($config.Get "site_url") -}}
+  {{- $config.Set "site_url" site.BaseURL -}}
+{{- end -}}
 {{/* Use site language as the locale if not set. */}}
 {{- if not ($config.Get "locale") }}
   {{- $locale := partialCached "headless-cms/functions/locale" . }}

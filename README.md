@@ -48,6 +48,7 @@ Lastly, in the `params:` section of your site's `hugo.yaml` or
 params:
   headless_cms:
     engine: "sveltia"
+    engine_version: "0.254.0" # optional, CMS version to load, defaults to "latest"
     site_url: "https://your-site.org"
     ...
     backend:
